@@ -1,0 +1,5 @@
+D:\mcuxpressoIDE\workspace\frdmmcxa153_USB_PD_Board\drivers/fsl_clock.h:546:20:CLOCK_EnableClock	32	static
+D:\mcuxpressoIDE\workspace\frdmmcxa153_USB_PD_Board\drivers/fsl_reset.h:196:20:RESET_ReleasePeripheralReset	16	static
+D:\mcuxpressoIDE\workspace\frdmmcxa153_USB_PD_Board\drivers/fsl_port.h:360:20:PORT_SetPinConfig	32	static
+../board/pin_mux.c:37:6:BOARD_InitBootPins	8	static
+../board/pin_mux.c:66:6:BOARD_InitPins	24	static

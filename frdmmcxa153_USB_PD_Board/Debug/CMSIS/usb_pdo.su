@@ -1,0 +1,5 @@
+../CMSIS/usb_pdo.c:11:9:ReadPDSourceVandI	40	static
+../CMSIS/usb_pdo.c:34:9:CheckPDAttachStatus	32	static
+../CMSIS/usb_pdo.c:56:9:SelectPDSourceVoltage	32	static
+../CMSIS/usb_pdo.c:91:16:RequestPDO	24	static
+../CMSIS/usb_pdo.c:109:16:CheckPDResponse	32	static

@@ -1,0 +1,3 @@
+../device/system_MCXA153.c:64:29:SystemInit	16	static
+../device/system_MCXA153.c:118:6:SystemCoreClockUpdate	4	static
+../device/system_MCXA153.c:126:29:SystemInitHook	4	static

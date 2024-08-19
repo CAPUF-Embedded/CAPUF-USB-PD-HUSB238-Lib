@@ -1,0 +1,6 @@
+D:\mcuxpressoIDE\workspace\frdmmcxa153_USB_PD_Board\CMSIS/core_cm33.h:2587:22:__NVIC_SetPriority	16	static
+D:\mcuxpressoIDE\workspace\frdmmcxa153_USB_PD_Board\CMSIS/core_cm33.h:3140:26:SysTick_Config	16	static
+D:\mcuxpressoIDE\workspace\frdmmcxa153_USB_PD_Board\drivers/fsl_lpi2c.h:606:24:LPI2C_MasterGetStatusFlags	16	static
+../source/lpi2c_polling_b2b_master.c:50:6:SysTick_Handler	4	static
+../source/lpi2c_polling_b2b_master.c:58:6:SystickSetDelay	16	static
+../source/lpi2c_polling_b2b_master.c:68:5:main	64	static

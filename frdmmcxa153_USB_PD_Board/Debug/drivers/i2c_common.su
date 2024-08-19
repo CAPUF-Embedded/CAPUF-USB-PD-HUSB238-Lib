@@ -1,0 +1,4 @@
+../drivers/fsl_lpi2c.h:606:24:LPI2C_MasterGetStatusFlags	16	static
+../drivers/i2c_common.c:10:10:I2CWrite	32	static
+../drivers/i2c_common.c:44:10:I2CRead	32	static
+../drivers/i2c_common.c:78:6:I2CInit	48	static
