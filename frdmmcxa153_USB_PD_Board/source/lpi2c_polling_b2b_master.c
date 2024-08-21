@@ -7,7 +7,6 @@
 
 /*  Standard C Included Files */
 #include <Capuf_HUSB238.h>
-#include <Capuf_HUSB238.h>
 #include <stdio.h>
 #include <string.h>
 #include "pin_mux.h"
@@ -100,29 +99,46 @@ int main(void)
     SysTick_Config(SystemCoreClock / 1000U);
     SystickSetDelay(2000);
     /* CHECK for ACK from slave device */
-    if (kStatus_Success == LPI2C_MasterStart(I2C_INSTANCE, I2C_DEVICE_ADDR_7BIT, kLPI2C_Write))
-    {
-        /* Check communicate with slave successful or not */
-        if (LPI2C_MasterGetStatusFlags(I2C_INSTANCE) & kLPI2C_MasterNackDetectFlag)
-        {
-// 			slave did not acknowledge
-        	PRINTF("No ACK from slave\r\n");
-        }
-        else
-        {
-        	//slave acknowledged
-        	PRINTF("Ack from slave\r\n");
-        }
-    }
-    else
-    {
-    	//i2c bus busy
-    	PRINTF("I2C Busy\r\n");
-    }
+//    if (kStatus_Success == LPI2C_MasterStart(I2C_INSTANCE, I2C_DEVICE_ADDR_7BIT, kLPI2C_Write))
+//    {
+//        /* Check communicate with slave successful or not */
+//        if (LPI2C_MasterGetStatusFlags(I2C_INSTANCE) & kLPI2C_MasterNackDetectFlag)
+//        {
+//// 			slave did not acknowledge
+//        	PRINTF("No ACK from slave\r\n");
+//        }
+//        else
+//        {
+//        	//slave acknowledged
+//        	PRINTF("Ack from slave\r\n");
+//        }
+//    }
+//    else
+//    {
+//    	//i2c bus busy
+//    	PRINTF("I2C Busy\r\n");
+//    }
     //delay in milliseconds
     SystickSetDelay(2000);
 
      uint32_t status ;
+     uint8_t voltage=0,current=0;
+     // check for Slave i2c device ACK
+     status = ReadPDSourceVandI(I2C_DEVICE_ADDR_7BIT, &voltage, &current);
+     if(status == PD_OK)
+     {
+    	 PRINTF("ACK from I2C Slave Successful\r\n");
+     }
+     else
+     {
+    	 PRINTF("No ACK from Slave I2C Device\r\n");
+     }
+//     status = RequestHardwareReset(I2C_DEVICE_ADDR_7BIT);
+//     if(status == PD_OK)
+//     {
+//    	 PRINTF("Hardware Reset\r\n");
+//     }
+     SystickSetDelay(2000);
      uint8_t attach = 0;
      // check if power adapter attached or not
      status = CheckPDAttachStatus(I2C_DEVICE_ADDR_7BIT, &attach);
@@ -141,7 +157,7 @@ int main(void)
      SystickSetDelay(1000);
      /* select voltage to be requested*/
      uint8_t sourceVolt = sourcePDO12v;
-     status = SelectPDSourceVoltage(I2C_DEVICE_ADDR_7BIT, &sourceVolt);
+     status = SelectPDSourceVoltage(I2C_DEVICE_ADDR_7BIT, sourceVolt);
      if(status == PD_OK)
      {
     	 switch(sourceVolt)
@@ -174,36 +190,11 @@ int main(void)
     	 PRINTF("Failed to select voltage \r\n");
 //    	 return 0;
      }
-//
-//     //Send command request to set the configured voltage */
-//     status = RequestPDO(I2C_DEVICE_ADDR_7BIT, GO_COMMAND);
-//     if(status == PD_OK)
-//     {
-//    	 PRINTF("Request sent successfully\r\n");
-//     }
-//     else
-//     {
-//    	 PRINTF("Failed to send request\r\n");
-////    	 return 0;
-//     }
-//     uint32_t response = 0;
-//
-//     /* check if transaction is successfull*/
-//     status = CheckPDResponse(I2C_DEVICE_ADDR_7BIT, PD_STATUS1, &response);
-//     if(status == PD_OK)
-//     {
-//    	 if((response & 0x0F) == Success)
-//    	 {
-//    		 PRINTF("PDO transaction success\r\n");
-//    	 }
-//    	 else
-//    	 {
-//    		 PRINTF("PDO transaction failed\r\n");
-//    	 }
-//     }
-     SystickSetDelay(1000);
-     uint8_t voltage=0,current=0;
-//
+
+
+     SystickSetDelay(3000);
+
+
 //     /* read the current PD source voltage and current */
      status = ReadPDSourceVandI(I2C_DEVICE_ADDR_7BIT, &voltage, &current);
      if(status == PD_OK)

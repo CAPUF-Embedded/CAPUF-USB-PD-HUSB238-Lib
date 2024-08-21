@@ -37,7 +37,7 @@ uint8_t CheckPDAttachStatus(uint8_t deviceAddress, uint8_t *attachStatus)
 	uint8_t dataBuf[I2C_REGISTER_LENGTH]={0};
 	dataBuf[0] = (PD_STATUS1 & 0xFF);
 	uint32_t status = 0;
-	status = I2CWrite(deviceAddress, dataBuf, 1);	// write register read address (PD_STATUS1)
+	status = I2CWrite(deviceAddress, dataBuf, 1);	// write register  address (PD_STATUS1)
 	if(status != SUCCESS)
 	{
 		return status;
@@ -54,7 +54,7 @@ uint8_t CheckPDAttachStatus(uint8_t deviceAddress, uint8_t *attachStatus)
 }
 
 
-uint8_t SelectPDSourceVoltage(uint8_t deviceAddress, uint8_t *sourceVolt)
+uint8_t SelectPDSourceVoltage(uint8_t deviceAddress, uint8_t sourceVolt)
 {
 	uint32_t response = 0;
 	uint8_t dataBuf[I2C_REGISTER_LENGTH + 1]={0};
@@ -62,7 +62,7 @@ uint8_t SelectPDSourceVoltage(uint8_t deviceAddress, uint8_t *sourceVolt)
 //	src_pdo_t sourcePDO ;
 //	sourcePDO.selectPDO = (*sourceVolt) & 0x0F;
 //	dataBuf[1] = sourcePDO ;
-	dataBuf[1] = (((*sourceVolt) & 0x0F)<< 4);
+	dataBuf[1] = (((sourceVolt) & 0x0F)<< 4);
 	uint32_t status = 0;
 	status = I2CWrite(deviceAddress, dataBuf, 2); // write voltage value in register SRC_PDO
 	if(status != SUCCESS)
@@ -102,6 +102,61 @@ static uint8_t RequestPDO(uint8_t deviceAddress)
 	if(status != SUCCESS)
 	{
 		return status;
+	}
+	return PD_OK;
+}
+
+uint8_t RequestHardwareReset(uint8_t deviceAddress)
+{
+	uint32_t response = 0;
+	uint32_t status = 0;
+	uint8_t dataBuf[I2C_REGISTER_LENGTH + 1]={0};
+	dataBuf[0] = (GO_COMMAND & 0xFF);
+	uint8_t command = hardReset;	// command to start transaction for configured voltage
+//	go_command_t goCommand ;
+//	goCommand.commandFunction = (command) & 0x1F;
+	dataBuf[1] = (command) & 0x1F;
+	status = I2CWrite(deviceAddress, dataBuf, 2);	// write command value to register GO_COMMAND;
+	if(status != SUCCESS)
+	{
+		return status;
+	}
+	status = CheckPDResponse(deviceAddress, &response);
+	if(status != PD_OK)
+	{
+		return status;
+	}
+	if((response & 0x07)!= Success)
+	{
+		return PD_ERROR;
+	}
+	return PD_OK;
+}
+
+
+uint8_t GetSourceCapabilities(uint8_t deviceAddress)
+{
+	uint32_t response = 0;
+	uint32_t status = 0;
+	uint8_t dataBuf[I2C_REGISTER_LENGTH + 1]={0};
+	dataBuf[0] = (GO_COMMAND & 0xFF);
+	uint8_t command = getSRCCap;	// command to start transaction for configured voltage
+//	go_command_t goCommand ;
+//	goCommand.commandFunction = (command) & 0x1F;
+	dataBuf[1] = (command) & 0x1F;
+	status = I2CWrite(deviceAddress, dataBuf, 2);	// write command value to register GO_COMMAND;
+	if(status != SUCCESS)
+	{
+		return status;
+	}
+	status = CheckPDResponse(deviceAddress, &response);
+	if(status != PD_OK)
+	{
+		return status;
+	}
+	if((response & 0x07)!= Success)
+	{
+		return PD_ERROR;
 	}
 	return PD_OK;
 }

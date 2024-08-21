@@ -177,7 +177,6 @@ typedef struct
 /*@brief
  * This function checks the PD source delivered voltage and current.
  * @param deviceAddress : 7-bit I2C slave address
- * @param regAddr : register address of i2c device
  * @param voltage : pointer to buffer to store voltage setting
  * @param current : pointer to buffer to store current setting
  * return : PD_OK : Read source voltage and current successful
@@ -199,7 +198,6 @@ uint8_t CheckPDAttachStatus(uint8_t deviceAddress, uint8_t *attachStatus);
 /*@brief
  * This function reads the PD source adapter's response to USB PD board's request
  * @param deviceAddress : 7-bit I2C slave address
- * @param regAddr : register address of i2c device
  * @param pdResponse : pointer to a buffer, to store response  of PD source(adapter charger)
  * return : PD_OK : Read PD source response  successful
  * 			ERR_NOACK : No ACK from I2C Slave device
@@ -210,18 +208,16 @@ static uint8_t CheckPDResponse(uint8_t deviceAddress, uint32_t *pdResponse);
 /*@brief
  * This function selects the PD source adapter's voltage to USB PD board's request
  * @param deviceAddress : 7-bit I2C slave address
- * @param regAddr : register address of i2c device
- * @param sourceVolt : pointer to a buffer having voltage value
+ * @param sourceVolt :  voltage value
  * return : PD_OK : selected  PD source voltage  successful
  * 			ERR_NOACK : No ACK from I2C Slave device
  * 			ERR_I2CBUSY : I2C is busy
  */
-uint8_t SelectPDSourceVoltage(uint8_t deviceAddress, uint8_t *sourceVolt);
+uint8_t SelectPDSourceVoltage(uint8_t deviceAddress, uint8_t sourceVolt);
 
 /*@brief
  * This function reads the PD source adapter's response to USB PD board's request
  * @param deviceAddress : 7-bit I2C slave address
- * @param regAddr : register address of i2c device
  * return : PD_OK : request sent to pd source  successfully
  * 			ERR_NOACK : No ACK from I2C Slave device
  * 			ERR_I2CBUSY : I2C is busy
@@ -229,6 +225,24 @@ uint8_t SelectPDSourceVoltage(uint8_t deviceAddress, uint8_t *sourceVolt);
  */
 static uint8_t RequestPDO(uint8_t deviceAddress);
 
+/*@brief
+ * This function requests hardware reset for PD source adapter
+ * @param deviceAddress : 7-bit I2C slave address
+ * return : PD_OK : request sent to pd source  successfully
+ * 			ERR_NOACK : No ACK from I2C Slave device
+ * 			ERR_I2CBUSY : I2C is busy
+ * 			PD_ERROR    : Transaction failed
+ */
+uint8_t RequestHardwareReset(uint8_t deviceAddress);
 
+/*@brief
+ * This function requests to get Source capabilities of PD source adapter
+ * @param deviceAddress : 7-bit I2C slave address
+ * return : PD_OK : request sent to pd source  successfully
+ * 			ERR_NOACK : No ACK from I2C Slave device
+ * 			ERR_I2CBUSY : I2C is busy
+ * 			PD_ERROR    : Transaction failed
+ */
+uint8_t GetSourceCapabilities(uint8_t deviceAddress);
 
 #endif /* USB_PDO_H_ */

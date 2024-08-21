@@ -2,4 +2,6 @@
 ../drivers/Capuf_HUSB238.c:35:9:CheckPDAttachStatus	32	static
 ../drivers/Capuf_HUSB238.c:57:9:SelectPDSourceVoltage	32	static
 ../drivers/Capuf_HUSB238.c:92:16:RequestPDO	24	static
-../drivers/Capuf_HUSB238.c:110:16:CheckPDResponse	32	static
+../drivers/Capuf_HUSB238.c:109:9:RequestHardwareReset	32	static
+../drivers/Capuf_HUSB238.c:137:9:GetSourceCapabilities	32	static
+../drivers/Capuf_HUSB238.c:165:16:CheckPDResponse	32	static
